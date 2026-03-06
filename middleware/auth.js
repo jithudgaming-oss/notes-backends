@@ -1,0 +1,21 @@
+const jwt = require("jsonwebtoken")
+
+const auth = (req,res) => {
+    const header = req.headers.authorization
+
+    if( !header || !header.startsWith("Bearer")){
+        return res.status(401).json({message:"no token provided"})
+    }
+
+    const token = header.split(" ")[1]
+
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        req.user = {id: decoded.iserId}
+        next()
+    }catch(err){
+        return res.status(401).json({message:"invalid or expired token"})
+    }
+}
+
+module.exports = auth
