@@ -15,7 +15,9 @@ app.use("/api/auth", require("./routes/authRoutes"))
 
 
 const auth = require("./middleware/auth")
-app.use("/api/notes", require("./routes/noteRoutes"))
+app.use("/api/notes", auth, require("./routes/noteRoutes"))
+
+
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
