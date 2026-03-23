@@ -24,9 +24,7 @@ const getNote = async (req, res) => {
 const createNote = async (req, res) => {
   try {
     const { title, content } = req.body
-    if (!title || !content) {
-      return res.status(400).json({ message: "title and content should be filled" })
-    }
+
     const note = await Note.create({ title, content, user: req.user.id })
     res.status(201).json(note)
   } catch (err) {
